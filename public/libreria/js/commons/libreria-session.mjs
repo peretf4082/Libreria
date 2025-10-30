@@ -2,12 +2,6 @@ import { ROL } from "../model/model.mjs";
 
 const USUARIO_ID = 'USUARIO_ID';
 const USUARIO_ROL = 'USUARIO_ROL';
-<<<<<<< HEAD
-//Añadido
-const CARRO_ID = 'CARRO';
-const FACTURAS_ID = 'FACTURAS';
-=======
->>>>>>> origin/felipe-dev
 
 class LibreriaSession {
 
@@ -48,56 +42,6 @@ class LibreriaSession {
 
     return this.formatoMoneda.format(valor);
   }
-<<<<<<< HEAD
-
-  //Añadido
-  obtenerCarro() {
-    const usuarioId = this.getUsuarioId();
-    return model.getCarroCliente(usuarioId); // Obtiene el carrito directamente del modelo
-  }
-
-  guardarCarro(carrito) {
-    const usuarioId = this.getUsuarioId();
-    carrito.forEach(item => {
-        model.addClienteCarroItem(usuarioId, item); // Agrega cada ítem al carrito del cliente en el modelo
-    });
-  }
-
-  limpiarCarro() {
-    const usuarioId = this.getUsuarioId();
-    model.getClientePorId(usuarioId).getCarro().removeItems(); // Vacía el carrito en el modelo
-  }
-  
-  //Añadido
-  obtenerFacturas() {
-    
-    return JSON.parse(sessionStorage.getItem(FACTURAS_ID)) || [];
-  }
-
-  guardarFactura(factura) {
-    
-    let facturas = this.obtenerFacturas();
-    facturas.push(factura);
-    sessionStorage.setItem(FACTURAS_ID, JSON.stringify(facturas));
-  }
-
-  //Añadido
-  obtenerDatosCliente() {
-    const usuarioId = this.getUsuarioId();
-    return model.getClientePorId(usuarioId); // Devuelve los datos completos del cliente
-  }
-
-  //Añadido 
-  calcularTotalCarrito() {
-    const carrito = this.obtenerCarro();
-    let subtotal = carrito.reduce((sum, item) => sum + item.cantidad * item.libro.precio, 0);
-    let iva = subtotal * 0.21;  // IVA del 21%
-    let total = subtotal + iva;
-    return { subtotal, iva, total };
-  }
-
-=======
->>>>>>> origin/felipe-dev
 }
 
 export let libreriaSession = new LibreriaSession();

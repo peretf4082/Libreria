@@ -1,10 +1,6 @@
 import { libreriaSession } from "../../commons/libreria-session.mjs";
 import { Presenter } from "../../commons/presenter.mjs";
 import { router } from "../../commons/router.mjs";
-<<<<<<< HEAD
-import { model } from "../../model/model.mjs";
-=======
->>>>>>> origin/felipe-dev
 import { ClienteCatalogoLibroPresenter } from "../cliente-catalogo-libro/cliente-catalogo-libro-presenter.mjs";
 import { MensajesPresenter } from "../mensajes/mensajes-presenter.mjs";
 
@@ -34,11 +30,7 @@ export class ClienteHomePresenter extends Presenter {
   async refresh() {
     await super.refresh();
     await this.mensajesPresenter.refresh();
-<<<<<<< HEAD
-    let libros = model.getLibros();
-=======
     let libros = await this.model.getLibros();
->>>>>>> origin/felipe-dev
     // Importante!
     await Promise.all(libros.map(async (l) => { return await new ClienteCatalogoLibroPresenter(l, 'cliente-catalogo-libro', '#catalogo').refresh() }));
     this.salirLink.onclick = event => this.salirClick(event);

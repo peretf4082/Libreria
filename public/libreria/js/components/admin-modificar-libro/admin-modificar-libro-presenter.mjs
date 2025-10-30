@@ -1,9 +1,5 @@
 import { Presenter } from "../../commons/presenter.mjs";
 import { router } from "../../commons/router.mjs";
-<<<<<<< HEAD
-import { model } from "../../model/model.mjs";
-=======
->>>>>>> origin/felipe-dev
 import { MensajesPresenter } from "../mensajes/mensajes-presenter.mjs";
 
 
@@ -22,11 +18,7 @@ export class AdminModificarLibroPresenter extends Presenter {
   }
 
   getLibro() {
-<<<<<<< HEAD
-    return model.getLibroPorId(this.id);
-=======
     return this.model.getLibroPorId(this.id);
->>>>>>> origin/felipe-dev
   }
 
   get isbnInput() {
@@ -105,12 +97,7 @@ export class AdminModificarLibroPresenter extends Presenter {
     };
 
     try {
-<<<<<<< HEAD
-      // Intentamos actualizar el libro en el modelo
-      await model.updateLibro(libroModificado);
-=======
       await this.model.updateLibro(libroModificado._id, libroModificado);
->>>>>>> origin/felipe-dev
       this.mensajesPresenter.mensaje('¡Libro modificado exitosamente!');
       router.navigate('/libreria/admin-home.html');
     } catch (err) {
