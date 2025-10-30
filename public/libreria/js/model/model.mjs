@@ -15,13 +15,58 @@ export class Libreria {
   usuarios = [];
   facturas = [];
   static lastId = 0;
+<<<<<<< HEAD
 
   constructor() { }
+=======
+  static lastFacturaNumero = 0;
+
+  //AÑADIDO
+
+  constructor() {
+    this.loadState();
+  }
+  saveState() {
+    try {
+      const data = {
+        facturas: this.facturas,
+        lastFacturaNumero: Libreria.lastFacturaNumero,
+      };
+      localStorage.setItem('libreria_state', JSON.stringify(data));
+    } catch (e) {}
+  }
+  loadState() {
+    try {
+      const raw = localStorage.getItem('libreria_state');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (Array.isArray(data.facturas)) this.facturas = data.facturas;
+      if (typeof data.lastFacturaNumero === 'number') Libreria.lastFacturaNumero = data.lastFacturaNumero;
+    } catch (e) {}
+  }
+>>>>>>> origin/felipe-dev
 
   static genId() {
     return ++this.lastId;
   }
 
+<<<<<<< HEAD
+=======
+  static genNumeroFactura() {
+    try {
+      let current = parseInt(localStorage.getItem('libreria_lastFacturaNumero') || '0', 10);
+      current = isNaN(current) ? 0 : current;
+      current += 1;
+      localStorage.setItem('libreria_lastFacturaNumero', String(current));
+      this.lastFacturaNumero = current;
+      return current;
+    } catch (e) {
+      // Fallback por si localStorage falla
+      return ++this.lastFacturaNumero;
+    }
+  }
+
+>>>>>>> origin/felipe-dev
   /**
    * Libros
    */
@@ -175,11 +220,23 @@ export class Libreria {
   }
 
   getFacturaPorId(id) {
+<<<<<<< HEAD
     return this.facturas.filter((f) => f._id == id);
   }
 
   getFacturaPorNumero(numero) {
     return this.facturas.filter((f) => f.numero == numero);
+=======
+    return this.facturas.find((f) => f._id == id);
+  }
+
+  getFacturaPorNumero(numero) {
+    return this.facturas.find((f) => f.numero == numero);
+  }
+
+  getFacturasPorCliente(clienteId) {
+    return this.facturas.filter((f) => f.cliente && f.cliente._id == clienteId);
+>>>>>>> origin/felipe-dev
   }
 
   facturarCompraCliente(obj) {
@@ -189,18 +246,33 @@ export class Libreria {
     let factura = new Factura();
     Object.assign(factura, obj)
     factura.assignId();
+<<<<<<< HEAD
     factura.assignNumero();
+=======
+    factura.genNumero();
+>>>>>>> origin/felipe-dev
     factura.cliente = new Cliente();
     Object.assign(factura.cliente, cliente);
     delete factura.cliente.carro;
     Object.assign(factura, cliente.carro);
+<<<<<<< HEAD
     cliente.removeItems();
+=======
+    cliente.getCarro().removeItems();
+    this.facturas.push(factura);
+    this.saveState();
+    return factura;
+>>>>>>> origin/felipe-dev
   }
 
   removeFactura(id) {
     let factura = this.getFacturaPorId(id);
     if (!factura) throw new Error('Factura no encontrada');
     this.facturas = this.facturas.filter(f => f._id != id);
+<<<<<<< HEAD
+=======
+    this.saveState();
+>>>>>>> origin/felipe-dev
     return factura;
   }
 }
@@ -311,8 +383,13 @@ class Factura extends Identificable {
 
   calcular() {
     this.subtotal = this.items.reduce((total, i) => total + i.total, 0);
+<<<<<<< HEAD
     this.iva = this.total * 0.21;
     this.total = this.subtotal * this.iva;
+=======
+    this.iva = this.subtotal * 0.21;
+    this.total = this.subtotal + this.iva;
+>>>>>>> origin/felipe-dev
   }
 }
 
@@ -368,7 +445,11 @@ class Carro {
 
   removeItems() {
     this.items = [];
+<<<<<<< HEAD
     calcular();
+=======
+    this.calcular();
+>>>>>>> origin/felipe-dev
   }
   calcular() {
     this.subtotal = this.items.reduce((total, i) => total + i.total, 0);

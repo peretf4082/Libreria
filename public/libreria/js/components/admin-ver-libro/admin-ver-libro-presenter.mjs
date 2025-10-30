@@ -1,6 +1,9 @@
 import { Presenter } from "../../commons/presenter.mjs";
 import { router } from "../../commons/router.mjs";
+<<<<<<< HEAD
 import { model } from "../../model/model.mjs";
+=======
+>>>>>>> origin/felipe-dev
 import { MensajesPresenter } from "../mensajes/mensajes-presenter.mjs";
 
 export class AdminVerLibroPresenter extends Presenter {
@@ -19,7 +22,11 @@ export class AdminVerLibroPresenter extends Presenter {
 
   // para acceder al modelo, siempre con métodos, no con getters!
   getLibro() {
+<<<<<<< HEAD
     return model.getLibroPorId(this.id);
+=======
+    return this.model.getLibroPorId(this.id);
+>>>>>>> origin/felipe-dev
   }
 
   get isbnText() {
@@ -75,7 +82,11 @@ export class AdminVerLibroPresenter extends Presenter {
   borrarClick(event) {
     event.preventDefault();
     try {
+<<<<<<< HEAD
       model.removeLibro(this.id);
+=======
+      this.model.removeLibro(this.id);
+>>>>>>> origin/felipe-dev
       this.mensajesPresenter.mensaje('Libro borrado!');
       router.navigate('/libreria/admin-home.html');
     } catch (e) {
@@ -85,6 +96,7 @@ export class AdminVerLibroPresenter extends Presenter {
     }
   }
 
+<<<<<<< HEAD
   get desborrarLink() {
     return document.querySelector('#desborrarLink');
   }
@@ -102,6 +114,8 @@ export class AdminVerLibroPresenter extends Presenter {
     }
   }
 
+=======
+>>>>>>> origin/felipe-dev
   set libro(libro) {
     this.isbn = libro.isbn;
     this.titulo = libro.titulo;
@@ -119,15 +133,23 @@ export class AdminVerLibroPresenter extends Presenter {
   async refresh() {
     await super.refresh();
     await this.mensajesPresenter.refresh();
+<<<<<<< HEAD
     console.log(this.id);
     let libro = this.getLibro();
     if (libro) this.libro = libro;
     else console.error(`Libro ${id} not found!`);
+=======
+    console.log(this._id);
+    let libro = await this.getLibro();
+    if (libro) this.libro = libro;
+    else console.error(`Libro ${this._id} not found!`);
+>>>>>>> origin/felipe-dev
 
     if(this.modificarLink){
       this.modificarLink.href = `/libreria/admin-modificar-libro.html?id=${this.id}`;
     }
 
+<<<<<<< HEAD
     console.log(libro.borrado)
     console.log(this.borrarLink)
     if (!!libro.borrado)
@@ -140,6 +162,13 @@ export class AdminVerLibroPresenter extends Presenter {
     // document.querySelector('#agregarButton').onclick = event => this.agregarClick(event);
     // let self = this;
     // document.querySelector('#agregarButton').onclick = function (event) { self.agregarClick(event) };
+=======
+    if (!!libro.borrado)
+      this.borrarLink.parentElement.classList.add('oculto');
+    
+    this.borrarLink.onclick = event => this.borrarClick(event);
+   
+>>>>>>> origin/felipe-dev
   }
 
 }

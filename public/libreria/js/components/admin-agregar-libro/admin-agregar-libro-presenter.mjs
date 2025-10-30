@@ -1,6 +1,9 @@
 import { Presenter } from "../../commons/presenter.mjs";
 import { router } from "../../commons/router.mjs";
+<<<<<<< HEAD
 import { model } from "../../model/model.mjs";
+=======
+>>>>>>> origin/felipe-dev
 import { MensajesPresenter } from "../mensajes/mensajes-presenter.mjs";
 
 
@@ -68,6 +71,7 @@ export class AdminAgregarLibroPresenter extends Presenter {
     console.log('Prevented!', event);
     let obj = {
       isbn: this.isbnInputText,
+<<<<<<< HEAD
       titulo: this.tituloAreaText,
       autores: this.autoresAreaText,
       resumen: this.resumenAreaText,
@@ -76,6 +80,18 @@ export class AdminAgregarLibroPresenter extends Presenter {
     }
     try {
       let result = model.addLibro(obj);
+=======
+      isbn: this.isbnInput.value,
+      titulo: this.tituloArea.value,
+      autores: this.autoresArea.value,
+      resumen: this.resumenArea.value,
+      stock: parseInt(this.stockInput.value),
+      precio: parseFloat(this.precioInput.value)
+    }
+    console.log("Agregar libro:", JSON.stringify(obj, null, 2));
+    try {
+      let result = await this.model.addLibro(obj);
+>>>>>>> origin/felipe-dev
       this.mensajesPresenter.mensaje('Libro agregado!');
       router.navigate('/libreria/admin-home.html');
     } catch (err) {
@@ -88,6 +104,11 @@ export class AdminAgregarLibroPresenter extends Presenter {
   async refresh() {
     await super.refresh();
     await this.mensajesPresenter.refresh();
+<<<<<<< HEAD
+=======
+    this.isbnInput.value = crypto.randomUUID();
+
+>>>>>>> origin/felipe-dev
     // cuidado no asignar directamente el método, se pierde this!
     this.agregarInput.onclick = event => this.agregarClick(event);
   }

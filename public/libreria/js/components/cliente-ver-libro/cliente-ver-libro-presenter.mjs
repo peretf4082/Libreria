@@ -1,10 +1,20 @@
 import { Presenter } from "../../commons/presenter.mjs";
+<<<<<<< HEAD
 // import { Router } from "../../commons/router.mjs";
 import { model } from "../../model/model.mjs";
+=======
+import { MensajesPresenter } from "../mensajes/mensajes-presenter.mjs";
+import { libreriaSession } from "../../commons/libreria-session.mjs";
+import { router } from "../../commons/router.mjs";
+>>>>>>> origin/felipe-dev
 
 export class ClienteVerLibroPresenter extends Presenter {
   constructor(model, view) {
     super(model, view);
+<<<<<<< HEAD
+=======
+    this.mensajesPresenter = new MensajesPresenter(model, 'mensajes', '#mensajesContainer');
+>>>>>>> origin/felipe-dev
   }
 
   get searchParams() {
@@ -15,6 +25,7 @@ export class ClienteVerLibroPresenter extends Presenter {
     return this.searchParams.get('id');
   }
 
+<<<<<<< HEAD
   // para acceder al modelo, siempre con métodos, no con getters!
   getLibro() {
     return model.getLibroPorId(this.id);
@@ -67,6 +78,65 @@ export class ClienteVerLibroPresenter extends Presenter {
   }
 
   set libro(libro) {    
+=======
+  getLibro() {
+    return this.model.getLibroPorId(this.id);
+  }
+
+  get isbnText() {
+    return document.querySelector('#isbnText');
+  }
+
+  set isbn(isbn) {
+    this.isbnText.textContent = isbn;
+  }
+
+  get tituloText() {
+    return document.querySelector('#tituloText');
+  }
+
+  set titulo(titulo) {
+    this.tituloText.textContent = titulo;
+  }
+
+  get autoresText() {
+    return document.querySelector('#autoresText');
+  }
+
+  set autores(autores) {
+    this.autoresText.textContent = autores;
+  }
+
+  get resumenText() {
+    return document.querySelector('#resumenText');
+  }
+
+  set resumen(resumen) {
+    this.resumenText.textContent = resumen;
+  }
+
+  get precioText() {
+    return document.querySelector('#precioText');
+  }
+
+  set precio(precio) {
+    this.precioText.textContent = precio;
+  }
+
+  get stockText() {
+    return document.querySelector('#stockText');
+  }
+
+  set stock(stock) {
+    this.stockText.textContent = stock;
+  }
+
+  get agregarCarroInput() {
+    return document.querySelector('#agregarCarroInput');
+  }
+
+  set libro(libro) {
+>>>>>>> origin/felipe-dev
     this.isbn = libro.isbn;
     this.titulo = libro.titulo;
     this.autores = libro.autores;
@@ -75,6 +145,7 @@ export class ClienteVerLibroPresenter extends Presenter {
     this.precio = libro.precio;
   }
 
+<<<<<<< HEAD
   async refresh() {
     await super.refresh();
     console.log(this.id);
@@ -91,3 +162,38 @@ export class ClienteVerLibroPresenter extends Presenter {
   }
 
 }
+=======
+  async agregarCarroClick(event) {
+    event.preventDefault();
+    try {
+      const clienteId = libreriaSession.getUsuarioId();
+      await this.model.addClienteCarroItem(clienteId, {
+        libro: this.id,
+        cantidad: 1
+      });
+
+      this.mensajesPresenter.mensaje("Libro añadido al carro");
+      router.navigate('/libreria/cliente-carro.html');
+    } catch (error) {
+      console.error(error);
+      this.mensajesPresenter.error("Error al añadir al carro");
+    }
+  }
+
+  async refresh() {
+    await super.refresh();
+    await this.mensajesPresenter.refresh();
+
+    const libro = await this.getLibro();
+    if (libro) {
+      this.libro = libro;
+    } else {
+      this.mensajesPresenter.error(`Libro ${this.id} no encontrado`);
+    }
+
+    if (this.agregarCarroInput) {
+      this.agregarCarroInput.onclick = (event) => this.agregarCarroClick(event);
+    }
+  }
+}
+>>>>>>> origin/felipe-dev

@@ -2,9 +2,12 @@ import { ROL } from "../model/model.mjs";
 
 const USUARIO_ID = 'USUARIO_ID';
 const USUARIO_ROL = 'USUARIO_ROL';
+<<<<<<< HEAD
 //Añadido
 const CARRO_ID = 'CARRO';
 const FACTURAS_ID = 'FACTURAS';
+=======
+>>>>>>> origin/felipe-dev
 
 class LibreriaSession {
 
@@ -45,6 +48,7 @@ class LibreriaSession {
 
     return this.formatoMoneda.format(valor);
   }
+<<<<<<< HEAD
 
   //Añadido
   obtenerCarro() {
@@ -92,6 +96,8 @@ class LibreriaSession {
     return { subtotal, iva, total };
   }
 
+=======
+>>>>>>> origin/felipe-dev
 }
 
 export let libreriaSession = new LibreriaSession();
