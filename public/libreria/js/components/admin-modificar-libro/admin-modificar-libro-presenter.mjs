@@ -97,7 +97,8 @@ export class AdminModificarLibroPresenter extends Presenter {
     };
 
     try {
-      await this.model.updateLibro(libroModificado._id, libroModificado);
+  // model.updateLibro expects a single object with _id property
+  await this.model.updateLibro(libroModificado);
       this.mensajesPresenter.mensaje('¡Libro modificado exitosamente!');
       router.navigate('/libreria/admin-home.html');
     } catch (err) {
