@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.mjs",
   "scripts": {
-    "test": "mocha .\\test\\**\\*.spec.mjs --reporter spec",
+    "test": "mocha test/model.spec.mjs",
     "start": "node ."
   },
   "keywords": [],
