@@ -374,29 +374,16 @@ div.mensajes {
 .carro {
   width: 100%;
   height: 100%;
-<<<<<<< HEAD
-}
-
-.carro table {
-  height: 100%;
-  padding: 4px;
-  border-collapse: collapse;
-=======
   margin-left: 5px;
 }
 
 .carro table {
   border-collapse: collapse;
   width: 100%;
->>>>>>> origin/felipe-dev
 }
 
 .carro tfoot {
   border-top: 1px solid black;
-<<<<<<< HEAD
-  /* border-bottom: 1px solid black; */
-=======
->>>>>>> origin/felipe-dev
 }
 
 .carro thead {
@@ -423,16 +410,6 @@ div.mensajes {
   height: 100%;
 }
 
-<<<<<<< HEAD
-.carro .item-cantidad,
-.carro .item-unidad,
-.carro .item-total,
-.carro .iva,
-.carro .total {
-  text-align: center;
-}
-
-=======
 .carro .item-cantidad{
 
   text-align: left;
@@ -466,14 +443,11 @@ div.mensajes {
   margin: 0;
 }
 
->>>>>>> origin/felipe-dev
 .borrado {
   text-decoration: line-through;
   color: red;
 }
 
-<<<<<<< HEAD
-=======
 .botonera {
   display: flex;
   justify-content: center;
@@ -483,7 +457,6 @@ div.mensajes {
   height: 100%; 
   width: 100%;
 }
->>>>>>> origin/felipe-dev
 .carro input[type=number] {
   padding: 8px 12px;
   margin: 4px 0;
@@ -492,11 +465,6 @@ div.mensajes {
   width: 3em;
 }
 
-<<<<<<< HEAD
-/**
-* Factura
-*/
-=======
 .regla{
   border: none; 
   border-top: 1px solid black; 
@@ -552,7 +520,6 @@ hr.linea {
   margin: 1em 0;
 }
 
->>>>>>> origin/felipe-dev
 
 div .factura-field {
   display: flex;

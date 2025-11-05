@@ -32,6 +32,7 @@ export class ClienteHomePresenter extends Presenter {
     await this.mensajesPresenter.refresh();
     let libros = await this.model.getLibros();
     // Importante!
+    // Para cada libro l crea un nuevo ClienteCatalogoLibroPresenter que es el objeto que sabe dibujar un libro y ejecuta refresh para que se dibuje .all para que se dibujen todos
     await Promise.all(libros.map(async (l) => { return await new ClienteCatalogoLibroPresenter(l, 'cliente-catalogo-libro', '#catalogo').refresh() }));
     this.salirLink.onclick = event => this.salirClick(event);
   }
