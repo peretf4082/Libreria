@@ -158,7 +158,15 @@ export class Libreria {
 
   updateUsuario(obj) {
     let usuario = this.getUsuarioPorId(obj._id);
-    Object.assign(usuario, obj);
+    if (!usuario) throw new Error("Usuario no encontrado");
+    usuario.dni = obj.dni || usuario.dni;
+    usuario.nombre = obj.nombre || usuario.nombre;
+    usuario.apellidos = obj.apellidos || usuario.apellidos;
+    usuario.direccion = obj.direccion || usuario.direccion;
+    usuario.email = obj.email || usuario.email;
+    if (obj.password) {
+      usuario.password = obj.password;
+    }
     return usuario;
   }
 
@@ -184,7 +192,13 @@ export class Libreria {
     else throw new Error('Rol no encontrado');
 
     if (!usuario) throw new Error('Usuario no encontrado');
-    else if (usuario.verificar(password)) return usuario;
+    
+    // Verificación defensiva: si el método verificar no existe, comparar directamente
+    const passwordValido = typeof usuario.verificar === 'function' 
+      ? usuario.verificar(password) 
+      : usuario.password === password;
+    
+    if (passwordValido) return usuario;
     else throw new Error('Error en la contraseña');
   }
 
@@ -227,6 +241,20 @@ export class Libreria {
     if (!obj.cliente) throw new Error('Cliente no definido');
     let cliente = this.getClientePorId(obj.cliente);
     if (cliente.getCarro().items.length < 1) throw new Error('No hay que comprar');
+
+    for (const item of cliente.getCarro().items) {
+      if (item.libro.stock < item.cantidad) {
+        throw new Error(`Stock insuficiente para "${item.libro.titulo}". Solo quedan ${item.libro.stock}.`);
+      }
+    }
+    // Actualiza stock - buscar el libro real en la librería
+    cliente.getCarro().items.forEach(item => {
+      let libroReal = this.getLibroPorId(item.libro._id);
+      if (libroReal) {
+        libroReal.decStockN(item.cantidad);
+      }
+    });
+
     let factura = new Factura();
     Object.assign(factura, obj)
     factura.assignId();
@@ -395,7 +423,12 @@ class Carro {
       this.items.push(item);
     } else {
       item.cantidad = item.cantidad + obj.cantidad;
-      item.calcular();
+      // Calcular el total manualmente si el item no tiene el método calcular
+      if (typeof item.calcular === 'function') {
+        item.calcular();
+      } else {
+        item.total = item.cantidad * item.libro.precio;
+      }
     }
     this.calcular();
   }
@@ -406,7 +439,12 @@ class Carro {
     else {
       let item = this.items[index];
       item.cantidad = cantidad;
-      item.calcular();
+      // Calcular el total manualmente si el item no tiene el método calcular
+      if (typeof item.calcular === 'function') {
+        item.calcular();
+      } else {
+        item.total = item.cantidad * item.libro.precio;
+      }
     }
     this.calcular();
   }

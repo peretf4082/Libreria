@@ -18,6 +18,13 @@ export class MensajesPresenter extends Presenter {
   }
 
   get messagesDiv() {
+    // Primero intenta encontrar #mensajes dentro del parent
+    const parent = document.querySelector(this.parentSelector);
+    if (parent) {
+      const mensajesDiv = parent.querySelector('#mensajes');
+      if (mensajesDiv) return mensajesDiv;
+    }
+    // Si no lo encuentra, busca globalmente
     return document.querySelector('#mensajes');
   }
 
@@ -47,9 +54,18 @@ export class MensajesPresenter extends Presenter {
     });
   }
 
-  log(mensaje) { mensajes.log(mensaje); }
-  error(mensaje) { mensajes.error(mensaje); }
-  mensaje(mensaje) { mensajes.mensaje(mensaje); }
+  log(mensaje) { 
+    mensajes.log(mensaje);
+    this.refreshMensajes();
+  }
+  error(mensaje) { 
+    mensajes.error(mensaje);
+    this.refreshMensajes();
+  }
+  mensaje(mensaje) { 
+    mensajes.mensaje(mensaje);
+    this.refreshMensajes();
+  }
   limpiarMensajes() { mensajes.limpiar(); }
 
   async refresh() {
