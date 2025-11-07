@@ -1,3 +1,5 @@
+Realizado por: Nicolás Martínez, Oscar Merino, Carmen Crespo y Felipe Tévar
+
 Cuando no se puede ejecutar porque el puerto esta ocupado
 
 MAC OS:
