@@ -133,14 +133,11 @@ export class ClienteComprarCarroPresenter extends Presenter {
   
       sessionStorage.setItem(`factura_${nueva._id}`, JSON.stringify(copiaFactura));
   
-      router.navigate('/libreria/cliente-home.html');
       this.mensajesPresenter.mensaje("¡Compra realizada con éxito!");
-
+      router.navigate('/libreria/cliente-home.html');
     } catch (e) {
-      console.error("Error al procesar la compra:", e);
-      // Mostrar el error en la página actual (cliente-comprar-carro)
+      console.error(e);
       this.mensajesPresenter.error(e.message || "Error al generar la factura");
-      // No navegar, quedarse en esta página para que el usuario vea el error
     }
   }
   

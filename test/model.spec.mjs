@@ -1,25 +1,16 @@
-import { assert } from 'chai';
-import { Libreria, ROL } from '../public/libreria/js/model/model.mjs';
+// In browser tests we expect Mocha + Chai to be loaded via <script> and this file
+// to be included as a module (<script type="module">). We dynamically import
+// the app module from the served public path so tests run in the browser
+// environment without Node-specific mocks.
+const assert = chai.assert;
+let Libreria, ROL;
 
-// Simple in-memory localStorage mock for Node.js tests
-function installLocalStorageMock() {
-  if (global.localStorage) return;
-  const store = new Map();
-  global.localStorage = {
-    getItem(key) {
-      return store.has(key) ? store.get(key) : null;
-    },
-    setItem(key, value) {
-      store.set(key, String(value));
-    },
-    removeItem(key) {
-      store.delete(key);
-    },
-    clear() {
-      store.clear();
-    },
-  };
-}
+// Load the model module from the server before running the suite
+before(async function () {
+  const mod = await import('/libreria/js/model/model.mjs');
+  Libreria = mod.Libreria;
+  ROL = mod.ROL;
+});
 
 function createLibro(overrides = {}) {
   return {
@@ -61,11 +52,10 @@ describe('Libreria - Pruebas', function () {
   let libreria;
 
   beforeEach(function () {
-    installLocalStorageMock();
+    // En navegador usamos localStorage real; limpiamos para aislar pruebas
+    if (typeof localStorage !== 'undefined' && localStorage.clear) localStorage.clear();
     // Crear una instancia fresca por prueba
     libreria = new Libreria();
-    // Limpiar estado persistido para aislar pruebas
-    global.localStorage.clear();
     libreria.libros = [];
     libreria.usuarios = [];
     libreria.facturas = [];

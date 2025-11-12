@@ -7,6 +7,7 @@ const PORT = 3000;
 
 const app = express();
 app.use('/', express.static(path.join(STATIC_DIR, 'public')));
+app.use('/test', express.static(path.join(STATIC_DIR, 'test')));
 
 
 // app.get('/libreria/api/*', (req, res) => {
